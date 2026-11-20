@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Zap, CalendarDays, MapPin, Users, Search, RefreshCw, Ticket, ShieldCheck, X, ArrowUpRight } from 'lucide-react';
 import './style.css';
 
-const API = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+const API = (import.meta.env.VITE_API_BASE_URL || 'https://ai-workshop-1-7ayo.onrender.com').replace(/\/$/, '');
 const categories = ['All', 'Tech', 'Music', 'Workshops', 'Sports'];
 const userStoreKey = 'campuspulse_user_id';
 const prettyDate = value => {
@@ -26,7 +26,6 @@ function App() {
   const [busy, setBusy] = useState('');
 
   async function request(path, options) {
-    if (!API || API.includes('<paste')) throw new Error('Set VITE_API_BASE_URL in frontend/local.env and frontend/.env.local, then restart the frontend.');
     const response = await fetch(`${API}${path}`, { ...options, headers: { ...(options?.body ? { 'Content-Type': 'application/json' } : {}), ...options?.headers } });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || `Backend returned ${response.status}`);
@@ -63,7 +62,7 @@ function App() {
   function saveUser(value) { setUserId(value); localStorage.setItem(userStoreKey, value); }
 
   return <div className="app-shell">
-    <header className="topbar"><div className="brand"><div className="brand-icon"><Zap size={17} fill="currentColor"/></div><div><b>CampusPulse</b><span>Campus events, together</span></div></div><div className="live"><i/> API {API && !API.includes('<paste') ? 'CONNECTED' : 'URL NEEDED'}</div></header>
+    <header className="topbar"><div className="brand"><div className="brand-icon"><Zap size={17} fill="currentColor"/></div><div><b>CampusPulse</b><span>Campus events, together</span></div></div><div className="live"><i/> API READY</div></header>
     <main>
       <section className="hero"><div className="eyebrow"><span>YOUR CAMPUS, IN MOTION</span><span className="hero-line"/></div><h1>Find your next<br/><em>big moment.</em></h1><p>Discover events, meet your people, and make campus count.</p><div className="hero-stats"><div><strong>{events.length}</strong><span>events listed</span></div><div><strong>{registrations.length}</strong><span>your registrations</span></div><button className="refresh" onClick={loadEvents} aria-label="Refresh events"><RefreshCw size={16}/></button></div></section>
       <section className="user-panel"><div><span className="eyebrow-small">YOUR DATABASE USER ID</span><p>Use an existing ID to save and view registrations. No login required.</p></div><input aria-label="Database user ID" value={userId} onChange={e => saveUser(e.target.value)} placeholder="Paste your user ID"/></section>

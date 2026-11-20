@@ -39,7 +39,7 @@ cd frontend
 npm install
 ```
 
-Set `VITE_API_BASE_URL` in `frontend/local.env` and `frontend/.env.local` to the deployed backend origin (for example, `https://your-service.onrender.com`). The `.env.local` file is read by Vite and ignored by Git; `local.env` is included as the requested editable configuration template. Restart Vite after changing the URL, then run:
+The frontend defaults to the deployed backend at `https://ai-workshop-1-7ayo.onrender.com`. To override it, set `VITE_API_BASE_URL` in `frontend/.env.local` (ignored by Git) or `frontend/local.env` (editable template) to another backend origin. For a separate frontend hosting service, set the same variable in its build environment and rebuild the frontend. Restart Vite after changing the local URL, then run:
 
 ```sh
 npm run dev
