@@ -30,6 +30,23 @@ flask --app app run --debug
 
 The API is available at `http://127.0.0.1:5000`. The `.env` file is ignored by Git.
 
+## React frontend
+
+The CampusPulse React app is in `frontend/` and uses the supplied design in `../design/stitch_campus_event_hub/` as its visual reference. It loads events from `GET /api/events`, loads the entered user's registrations from `GET /api/me/registrations`, and creates registrations with `POST /api/registrations`. It has no sign-in or authorization flow. To run it locally:
+
+```sh
+cd frontend
+npm install
+```
+
+Set `VITE_API_BASE_URL` in `frontend/local.env` and `frontend/.env.local` to the deployed backend origin (for example, `https://your-service.onrender.com`). The `.env.local` file is read by Vite and ignored by Git; `local.env` is included as the requested editable configuration template. Restart Vite after changing the URL, then run:
+
+```sh
+npm run dev
+```
+
+The event and course policy is included in the frontend. Registration requires an existing database `user_id`; this is a plain identifier, not an account or verified identity. Event creation and admin metrics are not exposed by the current backend API, so the frontend does not pretend those actions are persisted.
+
 ## Routes
 
 | Method | Route | Purpose |
